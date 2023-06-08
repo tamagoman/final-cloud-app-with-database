@@ -9,8 +9,16 @@ class LessonInline(admin.StackedInline):
     model = Lesson
     extra = 5
 
+class QuestionInline(admin.StackedInline):
+    model = Question
+    extra = 5
 
-# Register your models here.
+class ChoiceInline(admin.StackedInline):
+    model = Choice
+    extra = 5
+
+
+# Registering models here.
 class CourseAdmin(admin.ModelAdmin):
     inlines = [LessonInline]
     list_display = ('name', 'pub_date')
@@ -21,23 +29,14 @@ class CourseAdmin(admin.ModelAdmin):
 class LessonAdmin(admin.ModelAdmin):
     list_display = ['title']
 
+class QuestionAdmin(admin.ModelAdmin):
+    inlines = [ChoiceInline]
 
-# <HINT> Register Question and Choice models here
-admin.site.register(Question)
-admin.site.register(Choice)
-# class QuestionAdmin(admin.ModelAdmin):
-#     list_display = ['question_text']
-#     lession = models.ForeignKey(Lesson, on_delete=models.CASCADE)
-#     # question text
-#     question_text = models.CharField(max_length=200)
-#     # question grade/mark
-#     grade = models.IntegerField(default=0)
-
-# class ChoiseAdmin(admin.ModelAdmin):
-#     list_display = ['title']
-
+# Question and Choice models
 
 admin.site.register(Course, CourseAdmin)
 admin.site.register(Lesson, LessonAdmin)
 admin.site.register(Instructor)
 admin.site.register(Learner)
+admin.site.register(Question, QuestionAdmin)
+admin.site.register(Choice)
